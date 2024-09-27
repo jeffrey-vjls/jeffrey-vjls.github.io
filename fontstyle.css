@@ -16,3 +16,15 @@
   font-weight: 400;
   font-style: normal;
 }
+
+html * {
+  font-family: "Klee One", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+rt {
+  font-family: "Murecho", system-ui;
+  font-weight: 200;
+  color: #000;
+}
