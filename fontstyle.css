@@ -1,5 +1,18 @@
-.zen-kurenaido-regular {
-  font-family: "Zen Kurenaido", sans-serif;
+.klee-one-regular {
+  font-family: "Klee One", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.klee-one-semibold {
+  font-family: "Klee One", cursive;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.murecho-regular {
+  font-family: "Murecho", system-ui;
+  font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
 }
