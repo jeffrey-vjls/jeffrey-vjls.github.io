@@ -25,6 +25,8 @@ html * {
 
 rt {
   font-family: "Murecho", system-ui !important;
-  font-weight: 200;
-  color: #000;
+  font-weight: 200 !important;
+  letter-spacing: normal !important;
+  text-align: center !important;
+  font-size: calc(min(50%, 16px)) !important;
 }
