@@ -6,18 +6,92 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Murecho&display=swap" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="/fontstyle.css">
+
+<script>
+  function drawMap() {
+    drawPref();
+    drawIsland();    
+    document.querySelector(".svgPref").getSVGDocument().getElementById('11').setAttribute("fill", "yellow");
+  }
+
+  function drawIsland() {
+    var svg_list = document.querySelectorAll(".svgMap"); // returns NodeList
+    var svg_array = [...svg_list]; // converts NodeList to Array
+    svg_array.forEach(svg => {
+      changeSvg(svg, "fill", "rgba(255,65,50,0.4)");
+      changeSvg(svg, "stroke-width", "6");
+    });
+  }
+
+  function drawPref() {
+    var plist = document.querySelector(".svgPref").getSVGDocument().getElementsByTagName('g');
+    for (var i=0; i<plist.length; i++){
+      plist[i].addEventListener("mouseover", function (e) {
+        this.setAttribute("fill","rgba(30,30,255,0.8)");
+      });
+      plist[i].addEventListener("mouseout", function (e) {
+        this.setAttribute("fill","rgba(0,0,0,0)");
+      });
+    }
+  }
+
+  
+  function changeSvg(svg, attr, val) {
+    svg.getSVGDocument().getElementById('svgId').setAttribute(attr, val);
+  }
+</script>
+
+<style>
+  .svgMap {
+    width: 70%;
+    position: absolute;
+    left:10%;
+    top:10%;
+  }
+  .svgPref {
+    width: 70%;
+    position: absolute;
+    left:10%;
+    top:10%;
+    z-index: 2;
+  }
+</style>
+
 </head>
-  <body>
+  <body onload="drawMap();">
     <h2>これは<ruby><rb>日</rb><rt>に</rt><rb>本</rb><rt>ほん</rt><rb>地</rb><rt>ち</rt><rb>図</rb><rt>ず</ruby>です</rt><rb></h2>
-    <div style="display: block; max-width: fit-content; background-color: rgba(229, 255, 0, 0.603); padding: 20px;">
-          <object id="svg-object" type="image/svg+xml" data="\assets\vectors\hokkaido.svg#svgView(viewBox(1360, 0, 640,640))" style="width: 300px;"></object>
-          <div style="text-align: center;">
-            <ruby style="font-size: 3em; text-align: center;"><rb>北</rb><rt>ほっ</rt><rb>海</rb><rt>かい</rt><rb>道</rb><rt>どう</rt></ruby>   
-          </div>
+    <div>
+          <!--
+          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/honshu.svg">Your browser does not support this function :(</object>
+          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/hokkaido.svg"></object>
+          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/kyushu.svg"></object>
+          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/shikoku.svg"></object>
+          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/okinawa.svg"></object>                                       
+          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/misc.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/02_aomori.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/03_iwate.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/04_miyagi.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/05_akita.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/06_yamagata.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/07_fukushima.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/08_ibaraki.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/09_tochigi.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/10_gunma.svg"></object>
+    
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/11_saitama.svg"></object>
+          
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/12_chiba.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/13_tokyo.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/14_kanagawa.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/15_niigata.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/47_okinawa.svg"></object>
+          -->
+          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/islands.svg"></object>
+          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefectures.svg"></object>
     </div>
     
     
-    <div style="font-size: 3em; word-spacing: 0.8em; letter-spacing: 0em; text-align: right; padding-right: 5vw;">
+    <div style="font-size: 2.3em; word-spacing: 0.8em; letter-spacing: 0em; text-align: right; padding-right: 5vw; margin-top: 80%;">
       <ruby><rb>北</rb><rt>ほっ</rt><rb>海</rb><rt>かい</rt><rb>道</rb><rt>どう</rt></ruby>
       <ruby><rb>青</rb><rt>あお</rt><rb>森</rb><rt>もり</rt><rb>県</rb><rt>けん</rt></ruby>
       <ruby><rb>岩</rb><rt>いわ</rt><rb>手</rb><rt>て</rt><rb>県</rb><rt>けん</rt></ruby>

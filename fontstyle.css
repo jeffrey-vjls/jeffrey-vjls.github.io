@@ -29,4 +29,7 @@ rt {
   letter-spacing: normal !important;
   text-align: center !important;
   font-size: calc(min(50%, 16px)) !important;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
