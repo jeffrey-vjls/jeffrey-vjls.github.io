@@ -8,29 +8,89 @@
 <link rel="stylesheet" type="text/css" href="/fontstyle.css">
 
 <script>
-  function drawMap() {
-    drawPref();
-    drawIsland();    
-    document.querySelector(".svgPref").getSVGDocument().getElementById('11').setAttribute("fill", "yellow");
+  const pNameList = ['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県'];
+  const pYomiList = ['ほっかいどう', 'あおもりけん', 'いわてけん', 'みやぎけん', 'あきたけん', 'やまがたけん', 'ふくしまけん', 'いばらきけん', 'とちぎけん', 'ぐんまけん', 'さいたまけん', 'ちばけん', 'とうきょうと', 'かながわけん', 'にいがたけん', 'とやまけん', 'いしかわけん', 'ふくいけん', 'やまなしけん', 'ながのけん', 'ぎふけん', 'しずおかけん', 'あいちけん', 'みえけん', 'しがけん', 'きょうとふ', 'おおさかふ', 'ひょうごけん', 'ならけん', 'わかやまけん', 'とっとりけん', 'しまねけん', 'おかやまけん', 'ひろしまけん', 'やまぐちけん', 'とくしまけん', 'かがわけん', 'えひめけん', 'こうちけん', 'ふくおかけん', 'さがけん', 'ながさきけん', 'くまもとけん', 'おおいたけん', 'みやざきけん', 'かごしまけん'];
+  const pRubyList = ['<ruby><rb>北</rb><rt>ほっ</rt><rb>海</rb><rt>かい</rt><rb>道</rb><rt>どう</rt></ruby>', '<ruby><rb>青</rb><rt>あお</rt><rb>森</rb><rt>もり</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>岩</rb><rt>いわ</rt><rb>手</rb><rt>て</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>宮</rb><rt>みや</rt><rb>城</rb><rt>ぎ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>秋</rb><rt>あき</rt><rb>田</rb><rt>た</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>山</rb><rt>やま</rt><rb>形</rb><rt>がた</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>福</rb><rt>ふく</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>茨</rb><rt>いばら</rt><rb>城</rb><rt>き</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>栃</rb><rt>とち</rt><rb>木</rb><rt>ぎ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>群</rb><rt>ぐん</rt><rb>馬</rb><rt>ま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>埼</rb><rt>さい</rt><rb>玉</rb><rt>たま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>千</rb><rt>ち</rt><rb>葉</rb><rt>ば</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>東</rb><rt>とう</rt><rb>京</rb><rt>きょう</rt><rb>都</rb><rt>と</rt></ruby>', '<ruby><rb>神</rb><rt>か</rt><rb>奈</rb><rt>な</rt><rb>川</rb><rt>がわ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>新</rb><rt>にい</rt><rb>潟</rb><rt>がた</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>富</rb><rt>と</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>石</rb><rt>いし</rt><rb>川</rb><rt>かわ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>福</rb><rt>ふく</rt><rb>井</rb><rt>い</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>山</rb><rt>やま</rt><rb>梨</rb><rt>なし</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>長</rb><rt>なが</rt><rb>野</rb><rt>の</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>岐</rb><rt>ぎ</rt><rb>阜</rb><rt>ふ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>静</rb><rt>しず</rt><rb>岡</rb><rt>おか</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>愛</rb><rt>あい</rt><rb>知</rb><rt>ち</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>三</rb><rt>み</rt><rb>重</rb><rt>え</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>滋</rb><rt>し</rt><rb>賀</rb><rt>が</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>京</rb><rt>きょう</rt><rb>都</rb><rt>と</rt><rb>府</rb><rt>ふ</rt></ruby>', '<ruby><rb>大</rb><rt>おお</rt><rb>阪</rb><rt>さか</rt><rb>府</rb><rt>ふ</rt></ruby>', '<ruby><rb>兵</rb><rt>ひょう</rt><rb>庫</rb><rt>ご</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>奈</rb><rt>な</rt><rb>良</rb><rt>ら</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>和</rb><rt>わ</rt><rb>歌</rb><rt>か</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>鳥</rb><rt>とっ</rt><rb>取</rb><rt>とり</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>島</rb><rt>しま</rt><rb>根</rb><rt>ね</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>岡</rb><rt>おか</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>広</rb><rt>ひろ</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>山</rb><rt>やま</rt><rb>口</rb><rt>ぐち</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>徳</rb><rt>とく</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>香</rb><rt>か</rt><rb>川</rb><rt>がわ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>愛</rb><rt>え</rt><rb>媛</rb><rt>ひめ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>高</rb><rt>こう</rt><rb>知</rb><rt>ち</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>福</rb><rt>ふく</rt><rb>岡</rb><rt>おか</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>佐</rb><rt>さ</rt><rb>賀</rb><rt>が</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>長</rb><rt>なが</rt><rb>崎</rb><rt>さき</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>熊</rb><rt>くま</rt><rb>本</rb><rt>もと</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>大</rb><rt>おおい</rt><rb>分</rb><rt>た</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>宮</rb><rt>みや</rt><rb>崎</rb><rt>ざき</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>鹿</rb><rt>か</rt><rb>児</rb><rt>ご</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>'];
+  
+  var gameState; // Pseudo 1st-index array
+  var plist; // <g> tags in prefectures.svg
+
+  function initialize() {
+    // Reset variables
+    gameState = new Array(47).fill(false);
+    plist = document.querySelector(".svgPref").contentDocument.getElementsByTagName('g');
+    initIsland();
+    initPref();
+    drawMap();
   }
 
-  function drawIsland() {
+  function updateGame() {
+    for (var i=0; i<plist.length; i++){
+      var el = plist[i];
+      if (gameState[i]) {
+        highlightElem(el);
+        document.getElementById("clickedP").innerHTML = pRubyList[i-1];
+      } else {
+        clearElem(el);
+      }
+    }
+
+    
+  }
+  
+  function drawMap() {
+    for (var i=0; i<plist.length; i++) {
+      var el = plist[i];
+      if (gameState[i+1]) {
+        selectElem(el);
+      } else {
+        clearElem(el);
+      }
+    }
+  }
+
+  function selectElem(elem) {
+    elem.setAttribute("fill", "yellow");
+  }
+
+  function highlightElem(elem) {
+    elem.setAttribute("fill", "rgba(255,30,30,0.8)");
+  }
+
+  function clearElem(elem) {
+    elem.setAttribute("fill", "rgba(0,0,0,0)");
+  }
+
+  function initIsland() {
     var svg_list = document.querySelectorAll(".svgMap"); // returns NodeList
     var svg_array = [...svg_list]; // converts NodeList to Array
     svg_array.forEach(svg => {
-      changeSvg(svg, "fill", "rgba(255,65,50,0.4)");
-      changeSvg(svg, "stroke-width", "6");
+      changeSvg(svg, "fill", "#bbb");
+      changeSvg(svg, "stroke-width", "5");
+      changeSvg(svg, "stroke", "#888");
     });
   }
 
-  function drawPref() {
-    var plist = document.querySelector(".svgPref").getSVGDocument().getElementsByTagName('g');
+  function initPref() {
     for (var i=0; i<plist.length; i++){
-      plist[i].addEventListener("mouseover", function (e) {
-        this.setAttribute("fill","rgba(30,30,255,0.8)");
+      var el = plist[i];
+
+      el.addEventListener("mouseover", function (e) {
+        this.setAttribute("stroke","#000");
+        this.setAttribute("stroke-width", "10")
       });
-      plist[i].addEventListener("mouseout", function (e) {
-        this.setAttribute("fill","rgba(0,0,0,0)");
+
+      el.addEventListener("mouseout", function (e) {
+        this.setAttribute("stroke","#000");
+        this.setAttribute("stroke-width", "3")
+      });
+
+      el.addEventListener("click", (e) => {
+        var prefId = e.currentTarget.id;
+        var pId = parseInt(prefId);
+        gameState.fill(false);
+        gameState[pId] = true;
+        updateGame();
       });
     }
   }
@@ -39,17 +99,18 @@
   function changeSvg(svg, attr, val) {
     svg.getSVGDocument().getElementById('svgId').setAttribute(attr, val);
   }
+
 </script>
 
 <style>
   .svgMap {
-    width: 70%;
+    width: 80vh;
     position: absolute;
     left:10%;
     top:10%;
   }
   .svgPref {
-    width: 70%;
+    width: 80vh;
     position: absolute;
     left:10%;
     top:10%;
@@ -58,87 +119,12 @@
 </style>
 
 </head>
-  <body onload="drawMap();">
+  <body onload="initialize();">
     <h2>これは<ruby><rb>日</rb><rt>に</rt><rb>本</rb><rt>ほん</rt><rb>地</rb><rt>ち</rt><rb>図</rb><rt>ず</ruby>です</rt><rb></h2>
     <div>
-          <!--
-          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/honshu.svg">Your browser does not support this function :(</object>
-          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/hokkaido.svg"></object>
-          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/kyushu.svg"></object>
-          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/shikoku.svg"></object>
-          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/okinawa.svg"></object>                                       
-          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/island_svg/misc.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/02_aomori.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/03_iwate.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/04_miyagi.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/05_akita.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/06_yamagata.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/07_fukushima.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/08_ibaraki.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/09_tochigi.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/10_gunma.svg"></object>
-    
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/11_saitama.svg"></object>
-          
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/12_chiba.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/13_tokyo.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/14_kanagawa.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/15_niigata.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefecture_svg/47_okinawa.svg"></object>
-          -->
-          <object class="svgMap" type="image/svg+xml" data="/assets/vectors/islands.svg"></object>
-          <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefectures.svg"></object>
-    </div>
-    
-    
-    <div style="font-size: 2.3em; word-spacing: 0.8em; letter-spacing: 0em; text-align: right; padding-right: 5vw; margin-top: 80%;">
-      <ruby><rb>北</rb><rt>ほっ</rt><rb>海</rb><rt>かい</rt><rb>道</rb><rt>どう</rt></ruby>
-      <ruby><rb>青</rb><rt>あお</rt><rb>森</rb><rt>もり</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>岩</rb><rt>いわ</rt><rb>手</rb><rt>て</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>宮</rb><rt>みや</rt><rb>城</rb><rt>ぎ</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>秋</rb><rt>あき</rt><rb>田</rb><rt>た</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>山</rb><rt>やま</rt><rb>形</rb><rt>がた</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>福</rb><rt>ふく</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby><br>
-      <ruby><rb>茨</rb><rt>いばら</rt><rb>城</rb><rt>き</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>栃</rb><rt>とち</rt><rb>木</rb><rt>ぎ</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>群</rb><rt>ぐん</rt><rb>馬</rb><rt>ま</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>埼</rb><rt>さい</rt><rb>玉</rb><rt>たま</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>千</rb><rt>ち</rt><rb>葉</rb><rt>ば</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>東</rb><rt>とう</rt><rb>京</rb><rt>きょう</rt><rb>都</rb><rt>と</rt></ruby>
-      <ruby><rb>神</rb><rt>か</rt><rb>奈</rb><rt>な</rt><rb>川</rb><rt>がわ</rt><rb>県</rb><rt>けん</rt></ruby><br>
-      <ruby><rb>新</rb><rt>にい</rt><rb>潟</rb><rt>がた</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>富</rb><rt>と</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>石</rb><rt>いし</rt><rb>川</rb><rt>かわ</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>福</rb><rt>ふく</rt><rb>井</rb><rt>い</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>山</rb><rt>やま</rt><rb>梨</rb><rt>なし</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>長</rb><rt>なが</rt><rb>野</rb><rt>の</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>岐</rb><rt>ぎ</rt><rb>阜</rb><rt>ふ</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>静</rb><rt>しず</rt><rb>岡</rb><rt>おか</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>愛</rb><rt>あい</rt><rb>知</rb><rt>ち</rt><rb>県</rb><rt>けん</rt></ruby><br>
-      <ruby><rb>三</rb><rt>み</rt><rb>重</rb><rt>え</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>滋</rb><rt>し</rt><rb>賀</rb><rt>が</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>京</rb><rt>きょう</rt><rb>都</rb><rt>と</rt><rb>府</rb><rt>ふ</rt></ruby>
-      <ruby><rb>大</rb><rt>おお</rt><rb>阪</rb><rt>さか</rt><rb>府</rb><rt>ふ</rt></ruby>
-      <ruby><rb>兵</rb><rt>ひょう</rt><rb>庫</rb><rt>ご</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>奈</rb><rt>な</rt><rb>良</rb><rt>ら</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>和</rb><rt>わ</rt><rb>歌</rb><rt>か</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby><br>
-      <ruby><rb>鳥</rb><rt>とっ</rt><rb>取</rb><rt>とり</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>島</rb><rt>しま</rt><rb>根</rb><rt>ね</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>岡</rb><rt>おか</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>広</rb><rt>ひろ</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>山</rb><rt>やま</rt><rb>口</rb><rt>ぐち</rt><rb>県</rb><rt>けん</rt></ruby><br>
-      <ruby><rb>徳</rb><rt>とく</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>香</rb><rt>か</rt><rb>川</rb><rt>がわ</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>愛</rb><rt>え</rt><rb>媛</rb><rt>ひめ</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>高</rb><rt>こう</rt><rb>知</rb><rt>ち</rt><rb>県</rb><rt>けん</rt></ruby><br>
-      <ruby><rb>福</rb><rt>ふく</rt><rb>岡</rb><rt>おか</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>佐</rb><rt>さ</rt><rb>賀</rb><rt>が</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>長</rb><rt>なが</rt><rb>崎</rb><rt>さき</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>熊</rb><rt>くま</rt><rb>本</rb><rt>もと</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>大</rb><rt>おお</rt><rb>分</rb><rt>いた</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>宮</rb><rt>みや</rt><rb>崎</rb><rt>ざき</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>鹿</rb><rt>か</rt><rb>児</rb><rt>ご</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>
-      <ruby><rb>沖</rb><rt>おき</rt><rb>縄</rb><rt>なわ</rt><rb>県</rb><rt>けん</rt></ruby>
-    </div>
+      <object class="svgMap" type="image/svg+xml" data="/assets/vectors/islands.svg"></object>
+      <object class="svgPref" type="image/svg+xml" data="/assets/vectors/prefectures.svg"></object>
+      <p id="clickedP" style="position: absolute; left: 30vh; top: 20vh; text-align: justify; font-size: 4em;"></p>
+    </div>    
   </body>
 </html>
