@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Where Quiz Page</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Murecho&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/fontstyle.css">
+<script>
+    const pNameList = ['北海道', '青森県', '岩手県', '宮城県', '秋田県', '山形県', '福島県', '茨城県', '栃木県', '群馬県', '埼玉県', '千葉県', '東京都', '神奈川県', '新潟県', '富山県', '石川県', '福井県', '山梨県', '長野県', '岐阜県', '静岡県', '愛知県', '三重県', '滋賀県', '京都府', '大阪府', '兵庫県', '奈良県', '和歌山県', '鳥取県', '島根県', '岡山県', '広島県', '山口県', '徳島県', '香川県', '愛媛県', '高知県', '福岡県', '佐賀県', '長崎県', '熊本県', '大分県', '宮崎県', '鹿児島県', '沖縄県'];
+    const pYomiList = ['ほっかいどう', 'あおもりけん', 'いわてけん', 'みやぎけん', 'あきたけん', 'やまがたけん', 'ふくしまけん', 'いばらきけん', 'とちぎけん', 'ぐんまけん', 'さいたまけん', 'ちばけん', 'とうきょうと', 'かながわけん', 'にいがたけん', 'とやまけん', 'いしかわけん', 'ふくいけん', 'やまなしけん', 'ながのけん', 'ぎふけん', 'しずおかけん', 'あいちけん', 'みえけん', 'しがけん', 'きょうとふ', 'おおさかふ', 'ひょうごけん', 'ならけん', 'わかやまけん', 'とっとりけん', 'しまねけん', 'おかやまけん', 'ひろしまけん', 'やまぐちけん', 'とくしまけん', 'かがわけん', 'えひめけん', 'こうちけん', 'ふくおかけん', 'さがけん', 'ながさきけん', 'くまもとけん', 'おおいたけん', 'みやざきけん', 'かごしまけん', 'おきなわけん'];
+    const pRubyList = ['<ruby><rb>北</rb><rt>ほっ</rt><rb>海</rb><rt>かい</rt><rb>道</rb><rt>どう</rt></ruby>', '<ruby><rb>青</rb><rt>あお</rt><rb>森</rb><rt>もり</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>岩</rb><rt>いわ</rt><rb>手</rb><rt>て</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>宮</rb><rt>みや</rt><rb>城</rb><rt>ぎ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>秋</rb><rt>あき</rt><rb>田</rb><rt>た</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>山</rb><rt>やま</rt><rb>形</rb><rt>がた</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>福</rb><rt>ふく</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>茨</rb><rt>いばら</rt><rb>城</rb><rt>き</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>栃</rb><rt>とち</rt><rb>木</rb><rt>ぎ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>群</rb><rt>ぐん</rt><rb>馬</rb><rt>ま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>埼</rb><rt>さい</rt><rb>玉</rb><rt>たま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>千</rb><rt>ち</rt><rb>葉</rb><rt>ば</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>東</rb><rt>とう</rt><rb>京</rb><rt>きょう</rt><rb>都</rb><rt>と</rt></ruby>', '<ruby><rb>神</rb><rt>か</rt><rb>奈</rb><rt>な</rt><rb>川</rb><rt>がわ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>新</rb><rt>にい</rt><rb>潟</rb><rt>がた</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>富</rb><rt>と</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>石</rb><rt>いし</rt><rb>川</rb><rt>かわ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>福</rb><rt>ふく</rt><rb>井</rb><rt>い</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>山</rb><rt>やま</rt><rb>梨</rb><rt>なし</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>長</rb><rt>なが</rt><rb>野</rb><rt>の</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>岐</rb><rt>ぎ</rt><rb>阜</rb><rt>ふ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>静</rb><rt>しず</rt><rb>岡</rb><rt>おか</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>愛</rb><rt>あい</rt><rb>知</rb><rt>ち</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>三</rb><rt>み</rt><rb>重</rb><rt>え</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>滋</rb><rt>し</rt><rb>賀</rb><rt>が</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>京</rb><rt>きょう</rt><rb>都</rb><rt>と</rt><rb>府</rb><rt>ふ</rt></ruby>', '<ruby><rb>大</rb><rt>おお</rt><rb>阪</rb><rt>さか</rt><rb>府</rb><rt>ふ</rt></ruby>', '<ruby><rb>兵</rb><rt>ひょう</rt><rb>庫</rb><rt>ご</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>奈</rb><rt>な</rt><rb>良</rb><rt>ら</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>和</rb><rt>わ</rt><rb>歌</rb><rt>か</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>鳥</rb><rt>とっ</rt><rb>取</rb><rt>とり</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>島</rb><rt>しま</rt><rb>根</rb><rt>ね</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>岡</rb><rt>おか</rt><rb>山</rb><rt>やま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>広</rb><rt>ひろ</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>山</rb><rt>やま</rt><rb>口</rb><rt>ぐち</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>徳</rb><rt>とく</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>香</rb><rt>か</rt><rb>川</rb><rt>がわ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>愛</rb><rt>え</rt><rb>媛</rb><rt>ひめ</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>高</rb><rt>こう</rt><rb>知</rb><rt>ち</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>福</rb><rt>ふく</rt><rb>岡</rb><rt>おか</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>佐</rb><rt>さ</rt><rb>賀</rb><rt>が</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>長</rb><rt>なが</rt><rb>崎</rb><rt>さき</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>熊</rb><rt>くま</rt><rb>本</rb><rt>もと</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>大</rb><rt>おお</rt><rb>分</rb><rt>いた</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>宮</rb><rt>みや</rt><rb>崎</rb><rt>ざき</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>鹿</rb><rt>か</rt><rb>児</rb><rt>ご</rt><rb>島</rb><rt>しま</rt><rb>県</rb><rt>けん</rt></ruby>', '<ruby><rb>沖</rb><rt>おき</rt><rb>縄</rb><rt>なわ</rt><rb>県</rb><rt>けん</rt></ruby>'];
+    
+    var gameState; // Pseudo 1st-index array
+    var plist; // <g> tags in prefectures.svg
+    var qlist; // Quiz questions
+    var qIndex;
+
+    function initialize() {
+      // Reset variables
+        gameState = new Array(47).fill(false);
+        plist = document.querySelector(".svgPref").contentDocument.getElementsByTagName('g');
+        initQuiz();
+        initPref();
+        drawMap();
+    }
+  
+    function initQuiz() {
+        qlist = Array.from(Array(47).keys());
+        for (var i=0; i<qlist.length; i++) {
+            var j = Math.floor(Math.random() * 47);
+            var a = qlist[i];
+            var b = qlist[j];
+            qlist = qlist.with(i, b).with(j, a);
+        }
+        qIndex = -1;
+        askQ();
+    }
+
+    function askQ() {
+        qIndex++;
+        if (qIndex >= qlist.length) {
+            initQuiz();
+        }
+        document.getElementById("question").innerHTML = pRubyList[qlist[qIndex]] + "を選んでください"
+    }
+
+    function updateGame() {
+        if (gameState[qlist[qIndex]]) {
+            document.getElementById("answer").innerHTML = pRubyList[qlist[qIndex]] + "です、正解！";            
+        } else {
+            document.getElementById("answer").innerHTML = "それ、" + pRubyList[qlist[qIndex]] + "じゃないよ";
+        }
+
+        for (var i=0; i<plist.length; i++){
+            var el = plist[i];
+            if (gameState[i]) {
+            highlightElem(el);
+            } else {
+            clearElem(el);
+            }
+        }
+        askQ();    
+    }
+  
+    function showPrefName(id, option) {
+      var output;
+  
+      if (option === "name") {
+        output = pNameList[id];
+      } else if (option === "yomi") {
+        output = pYomiList[id];
+      } else {
+        output = pRubyList[id];
+      }
+  
+      return output;
+    }
+    
+    function drawMap() {
+      for (var i=0; i<plist.length; i++) {
+        var el = plist[i];
+  
+        if (gameState[i]) {
+          selectElem(el);
+        } else {
+          clearElem(el);
+        }
+      }
+    }
+  
+    function selectElem(elem) {
+      elem.setAttribute("fill", "yellow");
+    }
+  
+    function highlightElem(elem) {
+      elem.setAttribute("fill", "rgba(50,255,50,0.8)");
+    }
+  
+    function clearElem(elem) {
+      elem.setAttribute("fill", "#228b22");
+    }
+  
+    function initPref() {
+      for (var i=0; i<plist.length; i++){
+        var el = plist[i];
+  
+        el.addEventListener("mouseover", function (e) {
+          this.setAttribute("stroke","#000");
+          this.setAttribute("stroke-width", "4");
+          this.setAttribute("fill-opacity", "0.5");
+        });
+  
+        el.addEventListener("mouseout", function (e) {
+          this.setAttribute("stroke","#000");
+          this.setAttribute("stroke-width", "1");
+          this.setAttribute("fill-opacity", "1");
+        });
+  
+        el.addEventListener("click", (e) => {
+          var prefId = e.currentTarget.id;
+          var pId = parseInt(prefId) -1;
+          gameState.fill(false);
+          gameState[pId] = true;
+          updateGame();
+        });
+      }
+    }
+  
+    
+    function changeSvg(svg, attr, val) {
+      svg.getSVGDocument().getElementById('svgId').setAttribute(attr, val);
+    }
+  
+  </script>
+  
+  <style>
+    .svgPref {
+      width: 90vh;
+      position: absolute;
+      padding-left: 15vh;
+      z-index: 2;
+    }
+    #question {
+      color: #fff;
+      font-size: 2em;
+      z-index: 4;
+    }
+    #answer {
+      color: #ffff33;
+      font-size: 2em;
+      z-index: 4;
+    }
+  </style>
+  
+  </head>
+    <body onload="initialize();" style="background-color:rgb(45, 45, 114);">    
+      <div>        
+        <object class="svgPref" type="image/svg+xml" data="/assets/vectors/pref.svg"></object>        
+        <p id="question"></p>
+        <p id="answer"></p>
+      </div>    
+    </body>
+  </html>
+  

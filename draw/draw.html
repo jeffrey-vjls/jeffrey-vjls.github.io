@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hand draw test.</title>
+</head>
+</html>
+
+<script>
+var mouseDown = 0;
+var x0 = 0;
+var y0 = 0;
+
+document.body.onmousedown = function() {
+    ++mouseDown;
+};
+document.body.onmouseup = function() {
+    --mouseDown;
+    x0 = 0;
+    y0 = 0;
+};
+
+function getMouseXY(e) {
+    var offset = document.getElementById("canvas").getBoundingClientRect();
+    x1 = e.clientX - offset.left;
+    y1 = e.clientY - offset.top;
+
+    if (mouseDown) {
+        let el = document.createElementNS("http://www.w3.org/2000/svg", 'line');
+        el.setAttributeNS(null, 'x1', x0);
+        el.setAttributeNS(null, 'x2', x1);
+        el.setAttributeNS(null, 'y1', y0);
+        el.setAttributeNS(null, 'y2', y1);
+        document.getElementById("paint").append(el);
+    }
+
+    x0 = x1;
+    y0 = y1;    
+
+}
+/*
+document.getElementById("canvas").addEventListener("mousemove", function(e) {
+    
+    document.getElementById("out").innerHTML = `Client X/Y: ${(e.pageX - offset.left)}, ${(e.pageY - offset.top)}`;
+});
+*/
+document.addEventListener("mousemove", getMouseXY);
+
+</script>
+
+<body>
+    <div id="canvas" style="background-color: #ddd; height:100vh; width:100vw;">
+        <svg id="paint" height="100%" width="100%" xmlns="http://www.w3.org/2000/svg" stroke="black" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"></svg>
+    </div>
+</body>
