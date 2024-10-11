@@ -46,10 +46,13 @@
     }
 
     function updateGame() {
+        var ansEl = document.getElementById("answer");
         if (gameState[qlist[qIndex]]) {
-            document.getElementById("answer").innerHTML = pRubyList[qlist[qIndex]] + "です、<ruby><rb>正解</rb><rt>せいかい</rt></ruby>！";            
+          ansEl.style.color = "#ffff33";
+          ansEl.innerHTML = pRubyList[qlist[qIndex]] + "です、<ruby><rb>正解</rb><rt>せいかい</rt></ruby>！";
         } else {
-            document.getElementById("answer").innerHTML = "それ、" + pRubyList[qlist[qIndex]] + "じゃないよ";
+          ansEl.style.color = "#ff5555";            
+          ansEl.innerHTML = "そこは" + pRubyList[qlist[qIndex]] + "ではありません。";
         }
 
         for (var i=0; i<plist.length; i++){
@@ -147,14 +150,14 @@
       z-index: 4;
     }
     #answer {
-      color: #ffff33;
+      color: #fff;
       font-size: 2em;
       z-index: 4;
     }
   </style>
   
   </head>
-    <body onload="initialize();" style="background-color:rgb(45, 45, 114);">    
+    <body onload="initialize();" style="background-color:rgb(33, 33, 70);">    
       <div>        
         <object class="svgPref" type="image/svg+xml" data="/assets/vectors/pref.svg"></object>        
         <p id="question"></p>
