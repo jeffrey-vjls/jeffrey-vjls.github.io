@@ -42,12 +42,12 @@
         if (qIndex >= qlist.length) {
             initQuiz();
         }
-        document.getElementById("question").innerHTML = pRubyList[qlist[qIndex]] + "を選んでください"
+        document.getElementById("question").innerHTML = pRubyList[qlist[qIndex]] + "を<ruby><rb>選</rb><rt>えら</rt></ruby>んでください。"
     }
 
     function updateGame() {
         if (gameState[qlist[qIndex]]) {
-            document.getElementById("answer").innerHTML = pRubyList[qlist[qIndex]] + "です、正解！";            
+            document.getElementById("answer").innerHTML = pRubyList[qlist[qIndex]] + "です、<ruby><rb>正解</rb><rt>せいかい</rt></ruby>！";            
         } else {
             document.getElementById("answer").innerHTML = "それ、" + pRubyList[qlist[qIndex]] + "じゃないよ";
         }
