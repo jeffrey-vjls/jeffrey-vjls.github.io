@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kana Keyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Murecho&family=Rampart+One&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/fontstyle.css">
+
+<script>
+const kL = ['あ','い','う','え','お','か','き','く','け','こ','さ','し','す','せ','そ','た','ち','つ','て','と','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ','ま','み','む','め','も','や','　','ゆ','　','よ','ら','り','る','れ','ろ','わ','　','　','　','を','ん','ゃ','ゅ','ょ','っ'];
+let outText = "";
+
+function init() {
+    var el = document.getElementById('vBoard');
+    el.appendChild(addBtn("゛"));
+    el.appendChild(addBtn("゜"));
+    var delB = addBtn("Del");
+    delB.setAttribute("type","button");
+    delB.setAttribute("onClick", "delText()");
+    el.appendChild(delB);
+    el.appendChild(addBtn("Enter"));
+
+    el.append(document.createElement("br"));
+    for (var i=0; i<kL.length; i++) {
+        var kel = document.createElement("button");
+        kel.classList.add("kBtn", "zen-kurenaido-regular");
+        var k = kL[i];
+        if (k === "　") {
+            kel.style.visibility = "hidden";
+        } else {
+            kel.id = k;
+        }
+        kel.append(k);
+        kel.setAttribute("type", "button");
+        kel.setAttribute("onClick", "keyIn(this.id)");
+        el.appendChild(kel);
+        if (i % 5 == 4) {
+            el.append(document.createElement("br"));
+        }
+    }
+}
+
+function delText() {
+    if (outText.length == 0) {return};
+    outText = outText.substring(0, outText.length -1);
+    document.getElementById("outEl").innerHTML = outText;
+}
+
+function addBtn(dT) {
+    var el = document.getElementById('vBoard');
+    var kel = document.createElement("button");
+    kel.classList.add("kBtn", "zen-kurenaido-regular");
+    kel.id = dT;
+    kel.append(dT);
+
+    return kel;
+}
+
+function keyIn(k) {
+    outText += k;
+    document.getElementById("outEl").innerHTML = outText;
+}
+
+</script>
+<style>
+    .kBtn {
+        font-size: 2em;
+        margin: 2px;
+    }
+
+    .ioEl {
+        float: left;
+        background-color: gray;
+        padding: 10px;
+    }
+
+    #outEl {
+        font-size: 4em;
+    }
+</style>
+
+</head>
+<body onload="init()">
+    　<span id="outEl" class="rampart-one-regular"></span>
+    <div>
+        <span class="ioEl" id="vBoard"></span>
+        <span class="ioEl">AAA</span>
+    </div>
+</body>
+</html>
