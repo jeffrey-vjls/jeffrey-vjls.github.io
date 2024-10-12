@@ -15,6 +15,9 @@
     var plist; // <g> tags in prefectures.svg
     var qlist; // Quiz questions
     var qIndex;
+    
+    var s = 0;
+    var n = 0;
 
     function initialize() {
       // Reset variables
@@ -39,10 +42,11 @@
 
     function askQ() {
         qIndex++;
+        n++;
         if (qIndex >= qlist.length) {
             initQuiz();
         }
-        document.getElementById("question").innerHTML = pRubyList[qlist[qIndex]] + "を<ruby><rb>選</rb><rt>えら</rt></ruby>んでください。"
+        document.getElementById("question").innerHTML = "Q" + n +"：" + pRubyList[qlist[qIndex]] + "を<ruby><rb>選</rb><rt>えら</rt></ruby>んでください。(" + s + "/"+ (n-1) + ")";
     }
 
     function updateGame() {
@@ -50,6 +54,7 @@
         if (gameState[qlist[qIndex]]) {
           ansEl.style.color = "#ffff33";
           ansEl.innerHTML = pRubyList[qlist[qIndex]] + "です、<ruby><rb>正解</rb><rt>せいかい</rt></ruby>！";
+          s++;
         } else {
           ansEl.style.color = "#ff5555";            
           ansEl.innerHTML = "そこは" + pRubyList[qlist[qIndex]] + "ではありません。";
