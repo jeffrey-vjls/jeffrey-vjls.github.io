@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Kana Keyboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Murecho&family=Rampart+One&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/fontstyle.css">
+
+<script>
+const kL = ['ゃ','ゅ','ょ','あ','い','う','え','お','か','き','く','け','こ','さ','し','す','せ','そ','た','ち','つ','て','と','な','に','ぬ','ね','の','は','ひ','ふ','へ','ほ','ま','み','む','め','も','や','　','ゆ','　','よ','ら','り','る','れ','ろ','わ','　','　','　','を','ん','っ'];
+const hasDaku = "かきくけこさしすせそたちつてとはひふへほ";
+const hasHandaku = "はひふへほばびぶべぼ";
+let outText = "";
+let currIn = "";
+
+function init() {
+    var el = document.getElementById('vBoard');
+    
+    let dakuB = addBtn("゛");
+    dakuB.setAttribute("onClick","toDaku()");
+    el.appendChild(dakuB);
+
+    let handakuB = addBtn("゜");
+    handakuB.setAttribute("onClick","toHandaku()");
+    el.appendChild(handakuB);
+
+    
+    //el.append(document.createElement("br"));
+    for (var i=0; i<kL.length; i++) {
+        var k = kL[i];
+        var kel = addBtn(k);
+        
+        kel.setAttribute("onClick", "keyIn(this.id)");
+        el.appendChild(kel);
+        
+        if (i % 5 == 2) {
+            el.append(document.createElement("br"));
+        }
+    }
+
+    var delB = addBtn("Del");
+    delB.setAttribute("onClick", "delText()");
+    el.appendChild(delB);
+    
+    el.appendChild(addBtn("Enter"));
+    
+    showOutText();
+}
+
+function toDaku() {
+    if (hasDaku.includes(currIn)) {
+        currIn = String.fromCharCode(currIn.charCodeAt(0) + 1);
+    } else if ("ぱぴぷぺぽ".includes(currIn) 
+        || hasDaku.includes(String.fromCharCode(currIn.charCodeAt(0) - 1)) ) {
+        currIn = String.fromCharCode(currIn.charCodeAt(0) - 1);
+    }
+    showOutText();
+}
+
+function toHandaku() {
+    var d = 0;
+    if (hasHandaku.includes(currIn)) {
+        d = 1;
+        if (hasDaku.includes(currIn)) {
+            d = 2;
+        }
+    } else if ("ぱぴぷぺぽ".includes(currIn)) {
+        d = -2;
+    }
+    currIn = String.fromCharCode(currIn.charCodeAt(0) + d);
+    showOutText();
+}
+
+function delText() {
+    if (currIn.length > 0) {
+        currIn = currIn.substring(0, currIn.length - 1);
+    } else {
+        outText = outText.substring(0, outText.length - 1);
+    }
+    showOutText();
+}
+
+function addBtn(dT) {
+    var el = document.getElementById('vBoard');
+    var kel = document.createElement("button");
+    kel.classList.add("kBtn", "zen-kurenaido-regular");
+    kel.append(dT);
+    kel.setAttribute("type","button");
+    if (dT === "　") {
+            kel.style.visibility = "hidden";
+    } else {
+        kel.id = dT;
+    }
+    return kel;
+}
+
+function keyIn(k) {
+    outText += currIn;
+    currIn = k;
+    showOutText();
+}
+
+function showOutText() {
+    console.log(outText + "," + currIn);
+    document.getElementById("outEl").innerHTML = outText + "<span id='cursor' class='outDisp'>" + currIn + "</span>";
+}
+
+</script>
+<style>
+    .kBtn {
+        font-size: 24pt;
+        margin: 2px;
+        display: inline-block;
+    }
+
+    .ioEl {
+        float: left;
+        padding: 10px;
+    }
+
+    .outDisp {
+        font-size: 48pt;
+    }
+
+    #cursor {
+        border-color: rgba(255,150,0,0.5);
+        border-style: solid;
+        background-color: rgba(255,150,0,0.2);
+    }
+
+    #Enter {
+        float:right;
+    }
+
+    #Del {
+        color: red;
+        font-weight: 800;
+    }
+
+</style>
+
+</head>
+<body onload="init()">
+    <span id="outEl" class="outDisp"></span>
+    <div>
+        <span class="ioEl" id="vBoard"></span>
+    </div>
+</body>
+</html>
