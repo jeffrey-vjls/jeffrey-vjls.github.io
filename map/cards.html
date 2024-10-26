@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Card Quiz Input</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Murecho&family=Rampart+One&family=Zen+Kurenaido&display=swap" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/fontstyle.css">
+
+<style>
+    .card {
+        background-color: #fff;
+        border-radius: 10px;
+        --border: 2px solid #333;
+        padding: 10px;
+    }
+</style>
+
+<script>
+    var plist;
+    
+    function isHokkaido(id) {
+        return (id == 1);
+    }
+    function isTouhoku(id) {
+        return (2 <= id && id <= 7);
+    }
+
+    function initialize() {
+        plist = document.querySelector(".svgPref").contentDocument.getElementsByTagName('g');
+        for (var i=0; i<plist.length; i++) {
+            var el = plist[i];
+            if (i < 46) {
+                if (i < 39) {
+                    if (i < 35) {
+                        if (i < 1) {
+                            // Hokkaido
+                            fillPref(el, "#ffffff");
+                            continue;
+
+                            // Honshu
+                        } else if (i < 7) {
+                            // Touhoku
+                            fillPref(el, "#ff0000");
+                        } else if (i < 14) {
+                            // Kanto
+                            fillPref(el, "#88ff22");
+                        } else if (i < 23) {
+                            // Chubu
+                            fillPref(el, "#aa77ee");
+                        } else if (i < 30) {
+                            // Kinki
+                            fillPref(el, "#ff8855");                            
+                        } else {
+                            // Chugoku
+                            fillPref(el, "#228811")
+                        }                      
+                        continue;
+                    }
+                    // Shikoku
+                    fillPref(el, "#8800ff");
+                    continue;
+                }
+                // Kyushu
+                fillPref(el, "#ff00ff");
+                continue;
+            }
+            // Okinawa
+            fillPref(el, "rgba(50,50,50)");
+        }
+    }
+
+    function fillPref(elem, col) {
+        elem.setAttribute("fill", col);
+        elem.setAttribute("stroke", col);
+        elem.setAttribute("stroke-width", "3");
+    }
+</script>
+
+</head>
+<body onload="initialize();" style="background-color: #aaa;">
+<br>
+<span style="font-size: 80px; font-weight: 600;" class="card noselect zen-kurenaido-regular">あ</span>
+<object class="svgPref" type="image/svg+xml" data="/assets/vectors/pref.svg"></object>
+</body>
+</html>
